@@ -3,18 +3,22 @@ package objects.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import core.GameScreen;
 
 import static helper.Constants.PPM;
 
 public class Player extends GameEntity{
 
     private int jumpCounter;
+    private TextureRegion playerStand;
 
-    public Player(float width, float height, Body body) {
+    public Player(float width, float height, Body body, GameScreen gameScreen) {
         super(width, height, body);
-        this.speed = 10f;
+        playerStand = gameScreen.getTextureAtlas().findRegion("Idle");
+        this.speed = 15f;
         this.jumpCounter = 0;
     }
 
@@ -39,7 +43,7 @@ public class Player extends GameEntity{
             velX = -1;
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCounter < 2){
-            float force = body.getMass() * 18;
+            float force = body.getMass() * 20;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             jumpCounter++;

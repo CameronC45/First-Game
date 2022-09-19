@@ -4,13 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import helper.TileMapHelper;
+import objects.CameraView;
 import objects.player.Player;
 import org.lwjgl.opengl.GL20;
 
@@ -25,18 +28,20 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+    private TextureAtlas textureAtlas;
 
     //game objects
+    private CameraView cameraView;
     private Player player;
 
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0,-25f), false);
+        this.world = new World(new Vector2(0,-35f), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+        textureAtlas = new TextureAtlas("sprites/player.atlas");
     }
 
     private void update() {
@@ -54,8 +59,8 @@ public class GameScreen extends ScreenAdapter {
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
-        position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
-        position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
+        position.x = Math.round(cameraView.getBody().getPosition().x * PPM * 10) / 10f;
+        position.y = Math.round(cameraView.getBody().getPosition().y * PPM * 10) / 10f;
         camera.position.set(position);
         camera.update();
     }
@@ -75,11 +80,19 @@ public class GameScreen extends ScreenAdapter {
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
+
     public World getWorld() {
         return world;
     }
 
+    public TextureAtlas getTextureAtlas(){
+        return textureAtlas;
+    }
+
     public void setPlayer(Player player){
         this.player = player;
+    }
+    public void setCameraView(CameraView cameraView) {
+        this.cameraView = cameraView;
     }
 }

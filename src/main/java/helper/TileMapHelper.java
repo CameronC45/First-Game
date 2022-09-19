@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import core.GameScreen;
+import objects.CameraView;
 import objects.player.Player;
 
 import static helper.Constants.PPM;
@@ -43,6 +44,18 @@ public class TileMapHelper {
                 Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
                 String rectangleName = mapObject.getName();
 
+                if(rectangleName.equals("camera")){
+                    Body body = BodyHelperService.createBody(
+                            rectangle.getX() + rectangle.getWidth() / 2,
+                            rectangle.getY() + rectangle.getHeight() / 2,
+                            rectangle.getWidth(),
+                            rectangle.getHeight(),
+                            true,
+                            gameScreen.getWorld()
+                    );
+                    gameScreen.setCameraView(new CameraView(rectangle.getWidth(), rectangle.getHeight(), body));
+                }
+
                 if(rectangleName.equals("player")){
                     Body body = BodyHelperService.createBody(
                             rectangle.getX() + rectangle.getWidth() / 2,
@@ -52,7 +65,7 @@ public class TileMapHelper {
                             false,
                             gameScreen.getWorld()
                     );
-                    gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+                    gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body, gameScreen));
                 }
             }
         }
