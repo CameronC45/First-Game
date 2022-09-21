@@ -3,6 +3,7 @@ package objects.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,6 +21,8 @@ public class Player extends GameEntity{
         playerStand = gameScreen.getTextureAtlas().findRegion("Idle");
         this.speed = 15f;
         this.jumpCounter = 0;
+        playerStand = new TextureRegion(gameScreen.getTextureAtlas(),0,0,16,16);
+        gameScreen.setRegion(playerStand);
     }
 
     @Override

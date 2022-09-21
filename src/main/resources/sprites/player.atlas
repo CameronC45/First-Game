@@ -1,0 +1,41 @@
+
+player.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Attack3
+  rotate: false
+  xy: 1354, 276
+  size: 675, 135
+  orig: 675, 135
+  offset: 0, 0
+  index: -1
+Fall
+  rotate: false
+  xy: 814, 139
+  size: 270, 135
+  orig: 270, 135
+  offset: 0, 0
+  index: -1
+Idle
+  rotate: false
+  xy: 2, 276
+  size: 1350, 135
+  orig: 1350, 135
+  offset: 0, 0
+  index: -1
+Jump
+  rotate: false
+  xy: 2, 2
+  size: 270, 135
+  orig: 270, 135
+  offset: 0, 0
+  index: -1
+Run
+  rotate: false
+  xy: 2, 139
+  size: 810, 135
+  orig: 810, 135
+  offset: 0, 0
+  index: -1
